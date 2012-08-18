@@ -1,0 +1,70 @@
+body {
+  margin: 50px;
+  padding: 0px;
+}
+
+.content {
+  width: 630px;
+  margin: 0px auto;
+}
+
+
+.gallery {
+  background-color: #C8C8A9;
+  width: 100%;
+  line-height: 1;
+  position: relative;
+}
+
+.gallery .viewer {
+  background-color: #83AF9B;
+  height: 240px;
+  text-align: center;
+}
+
+.gallery .thumbnail-control {
+  font-size: 4em;
+  color: white;
+}
+.gallery .viewer .current {
+
+}
+
+.gallery .thumbnails-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.gallery .container-thumbnail {
+  position: relative;
+  border: 1px solid #F9CDAD;
+  width: 100px;
+  height: 100px;
+  opacity: 0.5;
+  cursor: pointer;
+  float: left;
+  text-align: center;
+}
+
+.gallery .thumbnail {
+  max-width: 100px;
+  max-height: 100px;
+  vertical-align: middle;
+}
+
+.gallery .selected {
+  opacity: 1.0;
+}
+.gallery .thumbnail.active {
+
+}
+
+.gallery .thumbnail.previous {
+
+}
+
+.gallery .thumbnail.next {
+
+}
