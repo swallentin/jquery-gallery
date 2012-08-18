@@ -17,17 +17,40 @@ body {
 }
 
 .gallery .viewer {
-  background-color: #83AF9B;
+  background-color: #000;
   height: 240px;
   text-align: center;
 }
 
-.gallery .thumbnail-control {
-  font-size: 4em;
-  color: white;
+.gallery .viewer .item.selected {
+  display: block;
 }
-.gallery .viewer .current {
 
+.gallery .viewer .item {
+  display: none;
+}
+
+.gallery .control-container {
+}
+
+.gallery .control-container .btn {
+  position: absolute;
+  top: 120px;
+  height: 40px;
+  opacity: 0.9;
+/*  background-color: #69D2E7;
+*/}
+
+.gallery .control-container .btn-previous {
+  left: 5px;
+}
+
+.gallery .control-container .btn-next {
+  right: 5px;
+}
+
+.gallery .btn {
+  font-size: 2em;
 }
 
 .gallery .thumbnails-container {
@@ -54,12 +77,10 @@ body {
   vertical-align: middle;
 }
 
-.gallery .selected {
+.gallery .container-thumbnail .selected {
   opacity: 1.0;
 }
-.gallery .thumbnail.active {
 
-}
 
 .gallery .thumbnail.previous {
 
