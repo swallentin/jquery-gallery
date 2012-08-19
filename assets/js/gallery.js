@@ -5,51 +5,82 @@
 
   this.$element = $(element);
   this.options = options;
-  this.currentIndex = 0;
-  console.log('creating gallery');
-  // var url = 'http://api.flickr.com/services/feeds/photoset.gne?set=72157625970180048&nsid=50536211@N00&lang=en-us&jsoncallback=?';
-  // var url2 = 'http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?';
-  // $.getJSON(url,
-  //   {
-  //     format: 'json'
-  //   },
-  //   function(data){
-  //     $.each(data.items, function(i, item){
-  //       var $container = $('<div />')
-  //         .attr('class', 'container-thumbnail');
-  //       $('<img />')
-  //         .attr('src', item.media.m)
-  //         .attr('class', 'thumbnail')
-  //         .appendTo($container);
 
-  //         $container
-  //           .appendTo('.gallery');
-  //     });
-  //   }
-  // );
+  var viewerTemplate = Handlebars.compile($("#viewer-template").html())
+    , thumbnailTemplate = Handlebars.compile($("#thumbnail-template").html())
+    , that = this;
+  $.getJSON(options.url,
+    {
+      format: 'json'
+    },
+    function(data) {
+      $.each(data.items, function(i, item) {
+        var html = viewerTemplate({
+          url: item.media.m
+        });
+
+        that.$element.find('.viewer').append(html);
+
+        html = thumbnailTemplate({
+          url: item.media.m,
+          target: '#' + that.$element.attr('id')
+        });
+    
+        that.$element.find('.thumbnails').append(html);
+
+      });
+
+      that.effects();
+      that.to(0);
+    }
+  );
 
  };
 
  Gallery.prototype = {
   to: function(position) {
-    console.log('triggered gallery.to:', position);
-        var activePosition = this.activePosition()
-        , type = position > activePosition ? 'next':'previous';
+    var activePosition = this.activePosition()
+    , type = position > activePosition ? 'next':'previous';
     return this.update(type, position);
   },
   update: function(type, next) {
-    if( next == this.activePosition()) return;
+    if( next == this.activePosition() || this.sliding) return;
 
     var $viewer = this.$element.find('.viewer')
-        , $children = $($viewer.children())
-        , $to = $($children[next]);
+        , $thumbnails = this.$element.find('.thumbnails')
+        , $viewerChildren = $($viewer.children())
+        , $thumbnailsChildren = $($thumbnails.children())
+        , $next = $($viewerChildren[next])
+        , $nextThumbnail = $($thumbnailsChildren[next])
+        , $active = $viewer.find('.active')
+        , direction = type == 'next' ? 'left' : 'right'
+        , that = this;
 
-    $('.viewer .item.selected').fadeTo(500, 0, function() {
-      $children.removeClass('selected');
-      $to.addClass('selected');
-      $to.fadeTo(500, 1);
-      console.log('fade into darkness');
-    });
+    this.sliding = true;
+    if($next.hasClass('active')) return;
+
+    if( $.support.transition ) {
+      $next.addClass(type);
+      $next[0].offsetWidth;
+      $active.addClass(direction);
+      $next.addClass(direction);
+      this.$element.one($.support.transition.end, function() {
+        $next.removeClass([type, direction].join(' ')).addClass('active');
+        $active.removeClass('active');
+        $active.removeClass(direction);
+
+        $thumbnailsChildren.removeClass('active').stop().fadeTo(500, 0.5);
+        $nextThumbnail.addClass('active').stop().fadeTo(500, 1);
+
+        that.sliding = false;
+      });
+    } else {
+      $('.viewer .item.active').fadeTo(500, 0, function() {
+        $children.removeClass('active');
+        $next.addClass('active');
+        $next.fadeTo(500, 1);
+      });
+    }
     return this;
   },
   next: function() {
@@ -58,8 +89,8 @@
     if( targetPosition >= this.numberOfItems() )
       targetPosition = 0;
 
-    return this.to(targetPosition);
-    // this.update('next', targetPosition);
+    // return this.to(targetPosition);
+    return this.update('next', targetPosition);
   },
   previous: function() {
     var targetPosition = this.activePosition()-1;
@@ -67,18 +98,36 @@
     if( targetPosition <= 0 )
       targetPosition = this.numberOfItems()-1;
 
-    return this.to(targetPosition);
-    // this.update('previous', targetPosition);
+    // return this.to(targetPosition);
+    return this.update('previous', targetPosition);
   },
   activePosition: function() {
     var $viewer = this.$element.find('.viewer')
-        , $selected = $viewer.find('.selected')
+        , $active = $viewer.find('.active')
         , children = $viewer.children()
-        , activePosition = children.index($selected);
+        , activePosition = children.index($active);
     return activePosition;
   },
   numberOfItems: function() {
     return this.$element.find('.viewer').children().length;
+  },
+  effects: function() {
+    // apply effects
+    this.$element
+      .mouseover(function() {
+        $('.btn-navigate').stop().fadeTo(500, 1);
+      })
+      .mouseout(function() {
+        $('.btn-navigate').stop().fadeTo(500, 0);
+    });
+
+    this.$element.find('.thumbnail')
+      .mouseover(function() {
+        !$(this).hasClass('active') && $(this).stop().fadeTo(500, 1);
+      })
+      .mouseout(function() {
+        !$(this).hasClass('active') && $(this).stop().fadeTo(500, 0.5);
+      });
   }
  }
 
@@ -92,7 +141,6 @@
     var $this = $(this)
     , data = $this.data('gallery')
     , options = $.extend({}, $.fn.gallery.defaults, typeof option == 'object' && option);
-
     if(!data) $this.data('gallery', (data = new Gallery(this, options)));
     if (typeof option == 'number') data.to(option);
     else if (typeof option == 'string') data[option]();
@@ -108,27 +156,9 @@
  // binding of events and stuff
  $(function() {
 
-  $('.gallery')
-    .mouseover(function() {
-      $('.btn.thumbnail-control').stop().fadeTo(500, 1);
-    })
-    .mouseout(function() {
-      $('.btn.thumbnail-control').stop().fadeTo(500, 0);
-  });
 
-  $('.container-thumbnail')
-    .mouseover(function() {
-      !$(this).hasClass('selected') && $(this).stop().fadeTo(500, 1);
-    })
-    .mouseout(function() {
-      !$(this).hasClass('selected') && $(this).stop().fadeTo(500, 0.5);
-    })
-    .click(function() {
-      $('.container-thumbnail').removeClass('selected').stop().fadeTo(500, 0.5);
-      $(this).addClass('selected').stop().fadeTo(500, 1);
-    });
 
-  $('body').on('click.gallery.thumbnail-control', '[action]', function ( e ) {
+  $('body').on('click.gallery.navigate', '[action]', function ( e ) {
     // this is a bit hacky, simplied it translates into figure out the target gallery
     // and what action to send to the target. if the action is 'to' then figure out which
     // item to navigate to and send it as an option to the gallery
@@ -140,9 +170,9 @@
       , option = action;
 
     if( action == 'to' ) {
-      var $selected = $(this)
-      , children = $selected.parent().children()
-      , selectedPos = children.index($selected);
+      var $active = $(this)
+      , children = $active.parent().children()
+      , selectedPos = children.index($active);
       option = selectedPos;
     }
 
