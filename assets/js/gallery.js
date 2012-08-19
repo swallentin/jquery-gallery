@@ -33,35 +33,49 @@
  Gallery.prototype = {
   to: function(position) {
     console.log('triggered gallery.to:', position);
+        var activePosition = this.activePosition()
+        , type = position > activePosition ? 'next':'previous';
+    return this.update(type, position);
+  },
+  update: function(type, next) {
+    if( next == this.activePosition()) return;
+
     var $viewer = this.$element.find('.viewer')
         , $children = $($viewer.children())
-        , $to = $($children[position]);
+        , $to = $($children[next]);
 
-    $children.removeClass('selected');
-    $to.addClass('selected');
+    $('.viewer .item.selected').fadeTo(500, 0, function() {
+      $children.removeClass('selected');
+      $to.addClass('selected');
+      $to.fadeTo(500, 1);
+      console.log('fade into darkness');
+    });
+    return this;
   },
   next: function() {
-    var targetPosition = this.selectedPosition()+1;
+    var targetPosition = this.activePosition()+1;
 
     if( targetPosition >= this.numberOfItems() )
       targetPosition = 0;
 
-    this.to(targetPosition);
+    return this.to(targetPosition);
+    // this.update('next', targetPosition);
   },
   previous: function() {
-    var targetPosition = this.selectedPosition()-1;
+    var targetPosition = this.activePosition()-1;
 
     if( targetPosition <= 0 )
       targetPosition = this.numberOfItems()-1;
 
-    this.to(targetPosition);
+    return this.to(targetPosition);
+    // this.update('previous', targetPosition);
   },
-  selectedPosition: function() {
+  activePosition: function() {
     var $viewer = this.$element.find('.viewer')
         , $selected = $viewer.find('.selected')
         , children = $viewer.children()
-        , selectedPosition = children.index($selected);
-    return selectedPosition;
+        , activePosition = children.index($selected);
+    return activePosition;
   },
   numberOfItems: function() {
     return this.$element.find('.viewer').children().length;
@@ -70,9 +84,11 @@
 
  $.fn.gallery = function(option) {
   return this.each(function() {
-    // this snippet will ensure that only one gallery will be instantiated
-    // the instantiated gallery object will then be stored on the dom element using the $().data()
-    // it will also extend the default options with the provided option
+    /* 
+    This snippet will ensure that only one gallery will be instantiated.
+    the instantiated gallery object will then be stored on the dom element using the $().data()
+    it will also extend the default options with the provided option
+    */
     var $this = $(this)
     , data = $this.data('gallery')
     , options = $.extend({}, $.fn.gallery.defaults, typeof option == 'object' && option);
@@ -80,7 +96,6 @@
     if(!data) $this.data('gallery', (data = new Gallery(this, options)));
     if (typeof option == 'number') data.to(option);
     else if (typeof option == 'string') data[option]();
-
   })
  }
 
@@ -98,7 +113,7 @@
       $('.btn.thumbnail-control').stop().fadeTo(500, 1);
     })
     .mouseout(function() {
-      $('.btn.thumbnail-control').stop().fadeTo(500, 0.9);
+      $('.btn.thumbnail-control').stop().fadeTo(500, 0);
   });
 
   $('.container-thumbnail')
@@ -107,6 +122,10 @@
     })
     .mouseout(function() {
       !$(this).hasClass('selected') && $(this).stop().fadeTo(500, 0.5);
+    })
+    .click(function() {
+      $('.container-thumbnail').removeClass('selected').stop().fadeTo(500, 0.5);
+      $(this).addClass('selected').stop().fadeTo(500, 1);
     });
 
   $('body').on('click.gallery.thumbnail-control', '[action]', function ( e ) {
@@ -131,10 +150,6 @@
     e.preventDefault();
   });
 
-
  });
 
 })(jQuery);
-
-
-

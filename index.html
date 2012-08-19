@@ -74,11 +74,15 @@
           </div>
         </div>
         <div class='control-container'>
-          <button class='btn btn-previous thumbnail-control' target='.gallery' action='previous'>previous</button>
-          <button class='btn btn-next thumbnail-control' target='.gallery' action='next'>next</button>
+          <button class='btn btn-previous thumbnail-control' target='.gallery' action='previous'>
+            previous
+          </button>
+          <button class='btn btn-next thumbnail-control' target='.gallery' action='next'>
+            next
+          </button>
         </div>
         <div class='thumbnails-container'>
-          <div class="container-thumbnail thumbnail-control" action='to' target='.gallery'>
+          <div class="container-thumbnail thumbnail-control selected" action='to' target='.gallery'>
             <img src="http://farm6.staticflickr.com/5220/5414301098_f19e7c324f_m.jpg" class="thumbnail">
           </div>
           <div class="container-thumbnail thumbnail-control" action='to' target='.gallery'>
@@ -142,22 +146,20 @@
       </div>
     </div>
     <script src="assets/js/libs/jquery.js">
-        
-    </script>
-    <script src="assets/js/libs/underscore.js">
-        
-    </script>
-    <script src="assets/js/libs/backbone.js">
-        
+            
+    </script>    
+    <script src="assets/js/libs/transition.js">
+            
     </script>
     <script src="assets/js/gallery.js">
-        
+            
     </script>
     <script src="assets/js/scripts.js">
-        
+            
     </script>
-    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
-
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+    </script>
   </body>
 
 </html>
