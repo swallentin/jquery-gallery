@@ -90,8 +90,9 @@ Trigger the gallery to navigate to specified item.
   * Supports custom templating for rendering
 
 ## Known issues
+ 
+ * No IE support
  * Images are not vertically aligned
- * No IE 8 support
  * Not working with browsers that doesn't support transitions
 
 ## Backlog
@@ -109,6 +110,7 @@ Tested in the following browsers
  * Firefox (Version 11.0/Mac OS X Mountain Lion)
  * Chrome ( 21.0.1180.79/Windows 7 64-bit)
  * IE 8 (Version 8.0.7600.16385/Windows 7 64-bit) - Not working
+ * IE 9 (Version 9.0.8112.16421/Windows 7 64-bit) - Not working
  * Firefox (Version 6.02/Windows 7 64-bit)
  * Safari (Version 5.1.7 (7524.57.2)/Windows 7 64-bit)
 

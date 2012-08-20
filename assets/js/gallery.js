@@ -83,6 +83,7 @@
         $children.removeClass('active');
         $next.addClass('active');
         $next.fadeTo(500, 1);
+        that.sliding = false;
       });
     }
     return this;
