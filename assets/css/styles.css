@@ -1,8 +1,9 @@
 /* Layout */
 
 body {
-  margin: 50px;
+  margin:  50px;
   padding: 0px;
+  background: #000;
 }
 
 .content {
@@ -77,18 +78,21 @@ body {
 /* Control */
 .gallery .control .btn {
   position: absolute;
-  top: 120px;
-  height: 40px;
+  top: 90px;
+  width:60px;
+  height: 60px;
   opacity: 0;
   cursor: pointer;
 }
 
 .gallery .control .btn-previous {
-  left: -24px;
+  left: 0px;
+  background-image: url(../img/l.png);
 }
 
 .gallery .control .btn-next {
-  right: -24px;
+  right: 0px;
+  background-image: url(../img/r.png);
 }
 
 /* Thumbnails */
