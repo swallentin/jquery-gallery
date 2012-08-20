@@ -91,12 +91,13 @@ Trigger the gallery to navigate to specified item.
 
 ## Known issues
  
- * No IE support
+ * No IE support, need to figure out why events navigation events are not triggered properly on MS browsers
  * Images are not vertically aligned
  * Not working with browsers that doesn't support transitions
 
 ## Backlog
 
+ * Add IE support
  * Refactor out all effects code from the gallery.js file to allow customization of effects via the options parameter
  * Make images become vertically aligned
  * Add cycling/automatic toggle of images
