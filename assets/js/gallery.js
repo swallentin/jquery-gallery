@@ -6,33 +6,37 @@
   this.$element = $(element);
   this.options = options;
 
-  var viewerTemplate = Handlebars.compile($("#viewer-template").html())
-    , thumbnailTemplate = Handlebars.compile($("#thumbnail-template").html())
-    , that = this;
+  var that = this;
+  var render = function(data) {
+    $.each(data.items, function(i, item) {
+
+      if( options.viewerTemplate ) {
+        var html = options.viewerTemplate({
+          url: item.media.m,
+          heading: item.title,
+          description: item.description
+        });
+        that.$element.find('.viewer').append(html);
+      }
+
+      if( options.viewerTemplate ) {
+          var html = options.thumbnailTemplate({
+          url: item.media.m,
+          target: '#' + that.$element.attr('id')
+        });
+        that.$element.find('.thumbnails').append(html);
+      }
+    });
+
+    options.effects && options.effects(that.$element);
+    that.to(0);
+  };
+
   $.getJSON(options.url,
     {
       format: 'json'
     },
-    function(data) {
-      $.each(data.items, function(i, item) {
-        var html = viewerTemplate({
-          url: item.media.m
-        });
-
-        that.$element.find('.viewer').append(html);
-
-        html = thumbnailTemplate({
-          url: item.media.m,
-          target: '#' + that.$element.attr('id')
-        });
-    
-        that.$element.find('.thumbnails').append(html);
-
-      });
-
-      that.effects();
-      that.to(0);
-    }
+    render
   );
 
  };
@@ -61,7 +65,7 @@
 
     if( $.support.transition ) {
       $next.addClass(type);
-      $next[0].offsetWidth;
+      $next[0].offsetWidth; // some weird stuff going on here
       $active.addClass(direction);
       $next.addClass(direction);
       this.$element.one($.support.transition.end, function() {
@@ -110,24 +114,6 @@
   },
   numberOfItems: function() {
     return this.$element.find('.viewer').children().length;
-  },
-  effects: function() {
-    // apply effects
-    this.$element
-      .mouseover(function() {
-        $('.btn-navigate').stop().fadeTo(500, 1);
-      })
-      .mouseout(function() {
-        $('.btn-navigate').stop().fadeTo(500, 0);
-    });
-
-    this.$element.find('.thumbnail')
-      .mouseover(function() {
-        !$(this).hasClass('active') && $(this).stop().fadeTo(500, 1);
-      })
-      .mouseout(function() {
-        !$(this).hasClass('active') && $(this).stop().fadeTo(500, 0.5);
-      });
   }
  }
 
@@ -148,7 +134,12 @@
  }
 
  $.fn.gallery.defaults = {
-
+  viewerTemplate: function(data) {
+    return "";
+  },
+  thumbnailTemplate: function(data) {
+    return "";
+  }
  }
 
  $.fn.gallery.Constructor = Gallery;
