@@ -1,7 +1,7 @@
 (function ($) {
   "use strict";
 
- var Gallery = function(element, options) {
+ var Viewer = function(element, options) {
 
   this.$element = $(element);
   this.options = options;
@@ -19,7 +19,7 @@
         that.$element.find('.viewer').append(html);
       }
 
-      if( options.thumbnailTemplate ) {
+      if( options.viewerTemplate ) {
           var html = options.thumbnailTemplate({
           url: item.media.m,
           target: '#' + that.$element.attr('id')
@@ -81,30 +81,29 @@
     } else {
       $('.viewer .item.active').fadeTo(500, 0, function() {
         $children.removeClass('active');
-        $next.addClass('active').fadeTo(500,1);
-
+        $next.addClass('active');
+        $next.fadeTo(500, 1);
         that.sliding = false;
       });
     }
-
     return this;
   },
   next: function() {
-    console.log('next()');
     var targetPosition = this.activePosition()+1;
 
     if( targetPosition >= this.numberOfItems() )
       targetPosition = 0;
 
+    // return this.to(targetPosition);
     return this.update('next', targetPosition);
   },
   previous: function() {
-    console.log('previous()');
     var targetPosition = this.activePosition()-1;
 
     if( targetPosition <= 0 )
       targetPosition = this.numberOfItems()-1;
 
+    // return this.to(targetPosition);
     return this.update('previous', targetPosition);
   },
   activePosition: function() {
@@ -129,17 +128,9 @@
     var $this = $(this)
     , data = $this.data('gallery')
     , options = $.extend({}, $.fn.gallery.defaults, typeof option == 'object' && option);
-    
-    if(!data) {
-      // Create a new gallery and store it in the element using jQuery key/value data() storage
-      $this.data('gallery', (data = new Gallery(this, options)));
-    } 
-    if (typeof option == 'number') {
-      data.to(option);
-    }
-    if (typeof option == 'string') {
-      data[option]();
-    }
+    if(!data) $this.data('gallery', (data = new Gallery(this, options)));
+    if (typeof option == 'number') data.to(option);
+    else if (typeof option == 'string') data[option]();
   })
  }
 
@@ -162,6 +153,7 @@
     // and what action to send to the target. if the action is 'to' then figure out which
     // item to navigate to and send it as an option to the gallery
     // default option is navigating to previous or next
+    console.log('hello');
     var $this = $(this)
       , target
       , $targetEl = $((target = $this.attr('data-element')))

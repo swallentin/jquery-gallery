@@ -14,9 +14,9 @@
         <div class='viewer'>
         </div>
         <div class='control'>
-          <a class='btn btn-previous btn-navigate navigate' target='#gallery' action='previous'>
+          <a class='btn btn-previous btn-navigate navigate' data-element='#gallery' data-action='previous'>
           </a>
-          <a class='btn btn-next btn-navigate navigate' target='#gallery' action='next'>
+          <a class='btn btn-next btn-navigate navigate' data-element='#gallery' data-action='next'>
           </a>
         </div>
         <div class='thumbnails'>
@@ -45,10 +45,11 @@
       </div>    
     </script>
     <script id='thumbnail-template' type='text/x-handlebars-template'>
-      <div class="thumbnail navigate" action='to' target='{{target}}'>
+      <div class="thumbnail navigate" data-action='to' data-element='{{target}}'>
         <img src="{{url}}" class='img'>
       </div>
     </script>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
   </body>
 
 </html>
