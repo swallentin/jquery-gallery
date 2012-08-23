@@ -9,7 +9,7 @@
   var that = this;
   var render = function(data) {
     $.each(data.items, function(i, item) {
-
+      item.media.m = item.media.m.replace('_m', '_z');
       if( options.viewerTemplate ) {
         var html = options.viewerTemplate({
           url: item.media.m,
@@ -27,6 +27,38 @@
         that.$element.find('.thumbnails').append(html);
       }
     });
+
+    that.$element.find('.thumbnails img').parent().addClass('loading');
+
+    // that.$element.find('.viewer').imagesLoaded(function($images, $proper, $broken) {
+    //   // callback provides three arguments:
+    //   // $images: the jQuery object with all images
+    //   // $proper: the jQuery object with properly loaded images
+    //   // $broken: the jQuery object with broken images
+    //   // `this` is a jQuery object of container
+    //   console.log( $images.length + ' images total have been loaded in ' + $(this).attr('class') );
+    //   console.log( $proper.length + ' properly loaded images' );
+    //   console.log( $broken.length + ' broken images' );
+    // });
+    that.$element.find('.thumbnails').imagesLoaded()
+      .progress( function( isBroken, $images, $proper, $broken ){
+        // function scope (this) is a jQuery object with image that has just finished loading
+        // callback provides four arguments:
+        // isBroken: boolean value of whether the loaded image (this) is broken
+        // $images:  jQuery object with all images in set
+        // $proper:  jQuery object with properly loaded images so far
+        // $broken:  jQuery object with broken images so far
+        $(this).parent().removeClass('loading');
+        console.log( 'Loading progress: ' + ( $proper.length + $broken.length ) + ' out of ' + $images.length );
+
+      })
+      .fail(function() {
+        $(this).parent().removeClass('loading');
+        $(this).parent().addClass('fail');
+      })
+      .done( function() {
+        console.log('all images has finished loading.');
+      });
 
     options.effects && options.effects(that.$element);
     that.to(0);
