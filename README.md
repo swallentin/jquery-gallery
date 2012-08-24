@@ -3,6 +3,8 @@ Fi-Gallery
 
 A minimalistic jQuery widget gallery that loads images from flickr.
 
+See live demo @ http://swallentin.github.com/Fi-Gallery/
+
 ```js
   $('#gallery').gallery({
     url: 'http://api.flickr.com/services/feeds/photoset.gne?set=72157625970180048&nsid=50536211@N00&lang=en-us&jsoncallback=?',
