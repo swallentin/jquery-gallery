@@ -5,7 +5,7 @@
     <meta char-set="utf-8" />
     <title>
     </title>
-    <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
   </head>
   
   <body>
@@ -24,22 +24,22 @@
         </div>
       </div>
     </div>
-    <script src="../assets/js/libs/jquery.js">
+    <script src="assets/js/libs/jquery.js">
             
     </script>    
-    <script src="../assets/js/libs/jquery.imagesloaded.js">
+    <script src="assets/js/libs/jquery.imagesloaded.js">
             
     </script>    
-    <script src="../assets/js/libs/transition.js">
+    <script src="assets/js/libs/transition.js">
             
     </script>    
-    <script src="../assets/js/libs/handlebars.js">
+    <script src="assets/js/libs/handlebars.js">
             
     </script>
-    <script src="../assets/js/gallery.js">
+    <script src="assets/js/gallery.js">
             
     </script>
-    <script src="../assets/js/scripts.js">
+    <script src="assets/js/scripts.js">
             
     </script>
     <script id='viewer-template' type='text/x-handlebars-template'>
@@ -52,7 +52,20 @@
         <img src="{{url}}" class='img'>
       </div>
     </script>
-    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34210162-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    </script>
+
   </body>
 
 </html>
