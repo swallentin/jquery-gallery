@@ -1,4 +1,5 @@
 jquery-gallery
+
 ==========
 
 A minimalistic jQuery widget gallery that loads images from flickr.
