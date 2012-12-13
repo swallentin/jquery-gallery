@@ -1,9 +1,16 @@
-jquery-gallery
-==========
+# jQuery Gallery
 
-A minimalistic jQuery widget gallery that loads images from flickr.
+A simple jQuery gallery plugin that loads images from flickr.
 
-See live demo @ http://swallentin.github.com/jquery-gallery/
+See live demo @ http://swallentin.github.com/jquery-gallery/examples/index.html
+
+## Quick start
+Download the [production version][min] or the [development version][max].
+
+[min]: https://raw.github.com/swallentin/jquery-gallery/master/dist/jquery-gallery.min.js
+[max]: https://raw.github.com/swallentin/jquery-gallery/master/dist/jquery-gallery.js
+
+In your web page:
 
 ```js
   $('#gallery').gallery({
@@ -15,19 +22,16 @@ See live demo @ http://swallentin.github.com/jquery-gallery/
 
 ## Installation
 
-  $ git clone https://github.com/swallentin/Fi-Gallery.git
-
-## Quick Start
-
-The fastest way to get started using this jQuery widget is to clone this library and open demo/index.html in you favourite browser and editor.
+  $ git clone https://github.com/swallentin/jquery-gallery.git
 
 ## How to use the gallery jQuery widget
 
 Add the following resources to you project,
 
  * jQuery >= 1.8 
- * assets/js/lib/transitions.js
- * assets/js/gallery.js
+ * handlebars ~ 1.0
+ * lib/jquery.transitions.js
+ * dist/jquery-gallery.js
 
 The demo uses handlebars for templating.
 
@@ -104,6 +108,26 @@ Trigger the gallery to navigate to specified item.
  * Make images become vertically aligned
  * Add cycling/automatic toggle of images
 
+## License
+Copyright (c) 2012 swallentin  
+Licensed under the MIT, GPL licenses.
+
+## Contributing
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/cowboy/grunt).
+
+### Important notes
+Please don't edit files in the `dist` subdirectory as they are generated via grunt. You'll find source code in the `src` subdirectory!
+
+While grunt can run the included unit tests via PhantomJS, this shouldn't be considered a substitute for the real thing. Please be sure to test the `test/*.html` unit test file(s) in _actual_ browsers.
+
+### Installing grunt
+_This assumes you have [node.js](http://nodejs.org/) and [npm](http://npmjs.org/) installed already._
+
+1. Test that grunt is installed globally by running `grunt --version` at the command-line.
+1. If grunt isn't installed globally, run `npm install -g grunt` to install the latest version. _You may need to run `sudo npm install -g grunt`._
+1. From the root directory of this project, run `npm install` to install the project's dependencies.
+
+
 ## Other
 
 Tested in the following browsers
@@ -118,5 +142,3 @@ Tested in the following browsers
  * Safari (Version 5.1.7 (7524.57.2)/Windows 7 64-bit)
 
 [Pivotal Tracker Project](https://www.pivotaltracker.com/projects/621365)
-
-
