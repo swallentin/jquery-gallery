@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  
+  <head>
+    <meta char-set="utf-8" />
+    <title>
+    </title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
+  </head>
+  
+  <body>
+    <div class='content'>
+      <div id='gallery' class="gallery">
+        <div class='viewer'>
+        </div>
+        <div class='control'>
+          <a class='btn btn-previous btn-navigate navigate' data-element='#gallery' data-action='previous'>
+          </a>
+          <a class='btn btn-next btn-navigate navigate' data-element='#gallery' data-action='next'>
+          </a>
+        </div>
+        <div class='thumbnails'>
+ 
+        </div>
+      </div>
+    </div>
+    <script src="../assets/js/libs/jquery.js">
+            
+    </script>    
+    <script src="../assets/js/libs/jquery.imagesloaded.js">
+            
+    </script>    
+    <script src="../assets/js/libs/transition.js">
+            
+    </script>    
+    <script src="../assets/js/libs/handlebars.js">
+            
+    </script>
+    <script src="../assets/js/gallery.js">
+            
+    </script>
+    <script src="../assets/js/scripts.js">
+            
+    </script>
+    <script id='viewer-template' type='text/x-handlebars-template'>
+      <div class="item">
+        <img src="{{url}}" class="img">
+      </div>    
+    </script>
+    <script id='thumbnail-template' type='text/x-handlebars-template'>
+      <div class="thumbnail navigate" data-action='to' data-element='{{target}}'>
+        <img src="{{url}}" class='img'>
+      </div>
+    </script>
+  </body>
+
+</html>

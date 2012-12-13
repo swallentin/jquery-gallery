@@ -1,7 +1,9 @@
-Fi-Gallery
+jquery-gallery
 ==========
 
 A minimalistic jQuery widget gallery that loads images from flickr.
+
+See live demo @ http://swallentin.github.com/jquery-gallery/
 
 ```js
   $('#gallery').gallery({
